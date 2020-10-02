@@ -6,13 +6,12 @@
             - maybe scan /big/ and auto generate a cropped version for /small/
             - cropped photo dimsensions: 900 x 750
 """
-import argparse
 
 # Template
-# xxxxx: large image path
-# yyyyy: small image path
-# zzzzz: caption
-# zzzzz: caption
+# big_path: full image path
+# small_path: thumbnail path
+# caption: photo caption
+# gallery_type: door, kitchen, window, more
 TEMPLATE = """
           <div class="col-sm-6 col-md-4 col-lg-3 col-xl-2 item" data-aos="fade" data-src="big_path" data-sub-html="<h4>gallery_type</h4><p>caption</p>">
             <a href="#"><img src="small_path" alt="Image" class="img-fluid"></a>
@@ -44,26 +43,6 @@ def write_html(path, html):
     file = open(path, "w")
     file.writelines(html)
     file.close()
-
-def get_args():
-    """ Get system args  channel. """
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-c", "--channel", help="Channel to log and analyze",
-                        type=str, nargs='?', default='')
-    parser.add_argument("-g", "--game", help="Game being played",
-                        type=str, nargs='?', default='')
-    parser.add_argument("-t", "--time", help="Time limit in minutes",
-                        type=float, nargs='?', default=None)
-    parser.add_argument("-o", "--output", help="Bool for graph or csv output",
-                        type=float, nargs='?', default=0)
-
-    args = parser.parse_args()
-    channel = args.channel.lower()
-    game = args.game
-    time_limit = args.time
-    output = args.output
-    assert output in [0,1,2]
-    return channel, game, time_limit, output
 
 def main():
     pass
