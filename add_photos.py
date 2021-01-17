@@ -55,7 +55,7 @@ def write_html(path, html):
 def get_photos_in_dir(dir):
     """ Return list of jpgs in dir. """
     fnames = os.listdir(dir)
-    return [fname for fname in fnames if "jpg" in fname]
+    return [fname for fname in fnames if "DS_Store" not in fname]
 
 def main():
     """ Scan each gallery dir and update html files with new imgs. """
