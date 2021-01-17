@@ -6,6 +6,7 @@
             - maybe scan /big/ and auto generate a cropped version for /small/
             - cropped photo dimsensions: 900 x 750
 """
+import os
 
 # Template
 # big_path: full image path
@@ -17,6 +18,12 @@ TEMPLATE = """
             <a href="#"><img src="small_path" alt="Image" class="img-fluid"></a>
           </div>
 """
+
+HTML_DIRS = ["doors.html", "kitchens.html",
+            "windows.html", "more.html"]
+
+IMG_DIRS = ["images/doors/big", "images/kitchens/big",
+            "images/windows/big", "images/more/big"]
 
 def create_html_snippet(big_path, small_path, caption, gallery_type):
     """ Returns an html snippet for the photo using the template. """
@@ -44,8 +51,25 @@ def write_html(path, html):
     file.writelines(html)
     file.close()
 
+def get_photos_in_dir(dir):
+    """ Return list of jpgs in dir. """
+    fnames = os.listdir(dir)
+    return [fname for fname in fnames if "jpg" in fname]
+
 def main():
-    pass
+    """ Scan each gallery dir and update html files with new imgs. """
+    for html_dir, imgs_dir in zip(HTML_DIRS, IMG_DIRS):
+        html = get_html(html_dir)
+        imgs = get_photos_in_dir(imgs_dir)
+        for img in imgs:
+            if img not in ' '.join(html):
+                big_path = imgs_dir + "/" + img
+                small_path = big_path  # TODO: auto-create small version of img
+                caption = html_dir.split('.')[0]
+                gallery_type = caption
+                snippet = create_html_snippet(big_path, small_path, caption, gallery_type)
+                html = insert_html_snippet(html, snippet)
+        write_html(html_dir, html)
 
 if __name__ == '__main__':
     main()
