@@ -1,5 +1,5 @@
 """ add_photos.py is used to automatically create html code for each photo.
-    TODO: find a way to do this for batches
+    TODO: auto-generate cropped version for /small/
     IDEA 1: - add photos to correct directory, i.e. kitchens, doors, etc.
             - scan directory to see if in html file
             - if not, create html snippet and add it
