@@ -18,6 +18,7 @@ TEMPLATE = """
             <a href="#"><img src="small_path" alt="Image" class="img-fluid"></a>
           </div>
 """
+GALLERIES = ["Door", "Kitchen", "Window", "Other"]
 
 HTML_DIRS = ["doors.html", "kitchens.html",
             "windows.html", "more.html"]
@@ -58,7 +59,7 @@ def get_photos_in_dir(dir):
 
 def main():
     """ Scan each gallery dir and update html files with new imgs. """
-    for html_dir, imgs_dir in zip(HTML_DIRS, IMG_DIRS):
+    for gallery, html_dir, imgs_dir in zip(GALLERIES, HTML_DIRS, IMG_DIRS):
         html = get_html(html_dir)
         imgs = get_photos_in_dir(imgs_dir)
         for img in imgs:
@@ -66,7 +67,7 @@ def main():
                 big_path = imgs_dir + "/" + img
                 small_path = big_path  # TODO: auto-create small version of img
                 caption = html_dir.split('.')[0]
-                gallery_type = caption
+                gallery_type = gallery
                 snippet = create_html_snippet(big_path, small_path, caption, gallery_type)
                 html = insert_html_snippet(html, snippet)
         write_html(html_dir, html)
